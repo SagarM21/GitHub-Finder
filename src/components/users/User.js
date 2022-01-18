@@ -4,12 +4,9 @@ import Spinner from "../layout/Spinner";
 import PropTypes from "prop-types";
 import Repos from "../repos/Repos";
 
-function User({
-	getUser,
-	loading,
-	repos,
-	getUserRepos,
-	user: {
+const User = ({ getUser, loading, repos, getUserRepos, user }) => {
+	const { login } = useParams();
+	const {
 		name,
 		avatar_url,
 		html_url,
@@ -22,13 +19,12 @@ function User({
 		following,
 		public_repos,
 		public_gists,
-	},
-}) {
-	const { login } = useParams();
+	} = user;
 
 	useEffect(() => {
 		getUser(login);
 		getUserRepos(login);
+		//eslint-disable-next-line
 	}, []);
 	if (loading) return <Spinner />;
 
@@ -98,7 +94,7 @@ function User({
 			<Repos repos={repos} />
 		</Fragment>
 	);
-}
+};
 
 User.propTypes = {
 	loading: PropTypes.bool,
