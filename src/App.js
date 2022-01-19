@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; //switch is changed by routes
 import "./App.css";
 import Alert from "./components/layout/Alert";
@@ -7,11 +7,10 @@ import About from "./components/pages/About";
 import Search from "./components/users/Search";
 import User from "./components/users/User";
 import Users from "./components/users/Users";
+import AlertState from "./context/alert/AlertState";
 import GitHubState from "./context/github/GithubState";
 
 const App = () => {
-	const [alert, setAlert] = useState(null);
-
 	// async componentDidMount() {
 	// 	this.setState({ loading: true });
 	// 	const res = await axios.get(
@@ -20,35 +19,32 @@ const App = () => {
 	// 	this.setState({ users: res.data, loading: false });
 	// }
 
-	const showAlert = (msg, type) => {
-		setAlert({ msg, type });
-		setTimeout(() => setAlert(null), 4000);
-	};
-
 	return (
 		<GitHubState>
-			<Router>
-				<div className='App'>
-					<Navbar />
-					<div className='container'>
-						<Alert alert={alert} />
-						<Routes>
-							<Route
-								exact
-								path='/'
-								element={
-									<Fragment>
-										<Search setAlert={showAlert} />
-										<Users />
-									</Fragment>
-								}
-							/>
-							<Route exact path='/about' element={<About />} />
-							<Route path={"/user/:login"} element={<User />} />
-						</Routes>
+			<AlertState>
+				<Router>
+					<div className='App'>
+						<Navbar />
+						<div className='container'>
+							<Alert />
+							<Routes>
+								<Route
+									exact
+									path='/'
+									element={
+										<Fragment>
+											<Search />
+											<Users />
+										</Fragment>
+									}
+								/>
+								<Route exact path='/about' element={<About />} />
+								<Route path={"/user/:login"} element={<User />} />
+							</Routes>
+						</div>
 					</div>
-				</div>
-			</Router>
+				</Router>
+			</AlertState>
 		</GitHubState>
 	);
 };
