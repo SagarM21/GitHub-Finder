@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import AlertContext from "../../context/alert/alertContext";
 import GithubContext from "../../context/github/githubContext";
-import GithubState from "../../context/github/GithubState";
 
 const Search = () => {
 	const githubContext = useContext(GithubContext);
